@@ -31,7 +31,7 @@ jobs:
 
       - name: Build Sphinx documentation
         run: |
-          sphinx-build -b html doc _build
+          sphinx-build -b html doc _build/html
 
       - name: Deploy documentation to GitHub Pages
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -39,5 +39,5 @@ jobs:
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
+          publish_dir: _build/html/
           force_orphan: true

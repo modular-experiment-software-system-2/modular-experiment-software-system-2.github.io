@@ -10,4 +10,4 @@ Welcome to marinarasauced's documentation!
    :maxdepth: 2
    :caption: Projects:
 
-   ../projects/mess2/index
+   projects/mess2/index
