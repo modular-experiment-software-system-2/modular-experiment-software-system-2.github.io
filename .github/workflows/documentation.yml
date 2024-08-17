@@ -6,7 +6,7 @@ permissions:
   contents: write
 
 jobs:
-  docs:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,14 +14,28 @@ jobs:
       - name: Install dependencies
         run: |
           pip install sphinx sphinx_rtd_theme myst_parser
-      - name: Sphinx build
+      
+      - name: Build Sphinx documentation (doc)
         run: |
           sphinx-build doc _build
-      - name: Deploy to GitHub Pages
+      - name: Deploy doc to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _build/
+          force_orphan: true
+      
+      - name: Build Sphinx documentation (mess2)
+        run: |
+          sphinx-build mess2 mess2/_build
+      - name: Deploy mess2 to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        with:
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: mess2/_build/
+          dest_dir: mess2
           force_orphan: true
