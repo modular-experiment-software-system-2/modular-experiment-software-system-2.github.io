@@ -1,3 +1,3 @@
-# MESS2 UGVs
+# UGV
 
 placeholder
