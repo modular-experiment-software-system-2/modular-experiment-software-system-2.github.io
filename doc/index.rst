@@ -12,6 +12,6 @@ do later ...
    :maxdepth: 1
    :caption: MESS2
 
-   _mess2.rst
+   mess2/_mess2.rst
 
 

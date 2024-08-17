@@ -1,3 +1,0 @@
-# UAV
-
-placeholder
