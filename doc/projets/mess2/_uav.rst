@@ -3,8 +3,8 @@ UAV
 ==========================================
 
 .. toctree::
-   :maxdepth: 1
-   :hidden:
+    :maxdepth: 1
+    :hidden:
 
     uav/01.md
     uav/02.md
