@@ -1,10 +1,11 @@
 
-UGV
+Software
 ==========================================
 
 .. toctree::
     :maxdepth: 1
     :hidden:
 
-    _ugv/_hardware
-    _ugv/_software
+    11
+    12
+    13
