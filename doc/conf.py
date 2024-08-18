@@ -16,7 +16,7 @@ release = '0.0'
 
 extensions = [
     "myst_parser", 
-    "sphinxcontrib-bibtex",
+    "sphinxcontrib.bibtex",
 ]
 
 templates_path = ['_templates']
