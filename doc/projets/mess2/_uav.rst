@@ -4,7 +4,7 @@ UAV
 
 .. toctree::
    :maxdepth: 1
-   :caption: UAV
+   :hidden:
 
     uav/01.md
     uav/02.md
