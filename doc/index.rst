@@ -13,6 +13,8 @@ do later ...
    :caption: MESS2
 
    projets/mess2/_overview
+   projects/mess2/_vicon
    projets/mess2/_uav
-
+   projets/mess2/_ugv
+   projets/mess2/_citations
 
