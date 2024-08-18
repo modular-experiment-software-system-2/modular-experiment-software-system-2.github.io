@@ -6,7 +6,7 @@ UAV
     :maxdepth: 1
     :hidden:
 
-    uav/01.md
-    uav/02.md
-    uav/03.md
-    uav/04.md
+    uav/01
+    uav/02
+    uav/03
+    uav/04
