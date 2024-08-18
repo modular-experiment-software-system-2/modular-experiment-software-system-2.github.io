@@ -12,6 +12,7 @@ do later ...
    :maxdepth: 1
    :caption: MESS2
 
-   mess2/_mess2.rst
+   projets/mess2/_overview.rst
+   projets/mess2/_uav.rst
 
 
