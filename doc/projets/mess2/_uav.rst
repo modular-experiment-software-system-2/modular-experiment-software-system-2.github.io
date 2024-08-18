@@ -10,3 +10,4 @@ UAV
     _uav/02
     _uav/03
     _uav/04
+    _uav/05
