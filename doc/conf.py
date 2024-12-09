@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'marinarasauced'
+project = 'modular-experiment-software-system-2'
 copyright = '2024, Marina Nelson'
 author = 'Marina Nelson'
 release = '0.0'
