@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calibration &mdash; modular-experiment-software-system-2 0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=837179f8"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Usage" href="13.html" />
+    <link rel="prev" title="Installation" href="11.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            modular-experiment-software-system-2
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">MESS2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../_overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../_uav.html">UAV</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="_hardware.html">Hardware</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="_software.html">Software</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="11.html">Installation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Calibration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ros2-vicon-driver-calibration">ROS2 VICON Driver Calibration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flight-controller-calibration">Flight Controller Calibration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="13.html">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../_ugv.html">UGV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_citations.html">Citations</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">modular-experiment-software-system-2</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../_uav.html">UAV</a></li>
+          <li class="breadcrumb-item"><a href="_software.html">Software</a></li>
+      <li class="breadcrumb-item active">Calibration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/projets/mess2/_uav/12.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="calibration">
+<h1>Calibration<a class="headerlink" href="#calibration" title="Link to this heading"></a></h1>
+<p>Two types of calibrations can be performed with the ACE Lab Hawks, a correction calibration for the object’s boxy-fixed frame in the global frame, and a calibration of the flight controller’s sensors.</p>
+<section id="ros2-vicon-driver-calibration">
+<h2>ROS2 VICON Driver Calibration<a class="headerlink" href="#ros2-vicon-driver-calibration" title="Link to this heading"></a></h2>
+<p>In VICON Tracker, whenever a tracked object is created, that object is assigned axes that correspond to the current global frame in VICON Tracker regardless of the local orientation of the object. To account for this, we find difference quaternions for each respective agent that are applied to all received measurements in the ROS2 VICON Driver node. These difference quaternions align the measurements to the agents’ true body-fixed frames within the global frame.</p>
+<p><strong>This calibration only needs to be performed when a new agent is added in VICON Tracker or if the position of the tracking pearls on the object is changed.</strong></p>
+<p>We make several assumptions during the UAV calibration:</p>
+<ul class="simple">
+<li><p>The ground in the lab is relatively flat.</p></li>
+<li><p>Translating the UAV along a straight edge results does not change the UAV’s roll, pitch, or yaw.</p></li>
+<li><p>This translation occurs in the direction of the UAV’s body-fixed x-axis and is used to calculate the UAV’s global yaw.</p></li>
+<li><p>The approximate global yaw is sufficient to find the UAV’s true quaternion orientation in the global frame.</p></li>
+</ul>
+<p>With these assumptions, we start the calibration.</p>
+<ol class="arabic simple">
+<li><p><strong>Remove the previous calibration file (if any).</strong></p></li>
+</ol>
+<p>Our modified version of the ROS2 VICON Driver checks the mess2 project directory for any calibration files for the current agent. In a terminal, navigate to the mess2 project directory. On the ACE Lab GCS, mess2 is installed in the home directory.</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/mess2
+</pre></div>
+</div>
+<p>On the GCS, check to see whether there is a previous calibration file for the current agent:</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>agents/AGENT_NAME/calibration.yaml
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">agents/AGENT_NAME/calibration.yaml</span></code> is printed in the terminal, you must delete it.</p>
+<p>Delete the previous calibration file:</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-f<span class="w"> </span>agents/AGENT_NAME/calibration.yaml
+</pre></div>
+</div>
+<p>With the previous <code class="docutils literal notranslate"><span class="pre">calibration.yaml</span></code> file deleted (if any), the ROS2 VICON Driver node will not modify the raw measurements received from the DataStream SDK.</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Start the ROS2 VICON Driver.</strong></p></li>
+</ol>
+<p>On the Windows machine, login and open VICON Tracker. Calibrate the system, ensuring that the axes wand is perfectly level, then start tracking the agent that you are calibrating.</p>
+<p>Now, in a terminal on the GCS, start the driver node:</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>vicon_receiver<span class="w"> </span>client.launch.py
+</pre></div>
+</div>
+<p>As the node launches, it should display that it created a publisher segment for <code class="docutils literal notranslate"><span class="pre">AGENT_NAME</span></code>. If it does not, then you did not start tracking the agent in VICON Tracker.</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Launch the calibration nodes.</strong></p></li>
+</ol>
+<p>Open another terminal on the GCS and launch the calibration nodes. Since we must move the UAV manually, both nodes can run on the GCS. Change <code class="docutils literal notranslate"><span class="pre">AGENT_NAME</span></code> and <code class="docutils literal notranslate"><span class="pre">1000</span></code> to the name of the current agent and the number of measurements you want to be collected at each position during the calibration.</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>ros2<span class="w"> </span>launch<span class="w"> </span>hawk_calibration<span class="w"> </span>mess2.launch.py<span class="w"> </span>agent_name:<span class="o">=</span>AGENT_NAME<span class="w"> </span>num_measurements:<span class="o">=</span><span class="m">1000</span>
+</pre></div>
+</div>
+<p>In the same terminal, it will prompt you to press <code class="docutils literal notranslate"><span class="pre">Enter</span></code> to start collecting measurements at position one. If you have not done so already, move the UAV to its first position along the straight edge making sure that the body-fixed x-axis is in the direction of the future translation, then press <code class="docutils literal notranslate"><span class="pre">Enter</span></code>. You should see a progress percentage as feedback as measurements are recursively added to the average pose at position one.</p>
+<p>Move the UAV to its second position along the straight edge. The terminal running the calibration nodes will prompt you to press<code class="docutils literal notranslate"><span class="pre">Enter</span></code> to start collecting measurements at position two. Once the progress percentage reaches 100%, the new calibration file will be automatically written to <code class="docutils literal notranslate"><span class="pre">~/mess2/agents/AGENT_NAME/calibration.yaml</span></code>.</p>
+<p>Since the ROS2 VICON Driver reads the calibration files as the publisher segment is created, the node must be relaunched to observe any changes.</p>
+</section>
+<section id="flight-controller-calibration">
+<h2>Flight Controller Calibration<a class="headerlink" href="#flight-controller-calibration" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="11.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="13.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Marina Nelson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
